@@ -12,19 +12,24 @@ class MovieCarousel extends Component {
         error: false,
     };
 
+    componentDidMount() {
+        this.fetchMovies()
+    }
+
     fetchMovies = async () => {
         try {
             let respons = await fetch(`http://www.omdbapi.com/?apikey=fb8521a1&s=${this.props.query}`)
             let data = await respons.json()
 
-
-            this.setState({
-                movies: data.Search,
-                isLoading: false,
-            })
-
-
+            if (respons.ok) {
+                this.setState({
+                    movies: data.Search,
+                    isLoading: false,
+                    error: false,
+                })
+            }
         } catch (error) {
+            console.log(123)
             this.setState({
                 isLoading: false,
                 error: true,
@@ -33,17 +38,11 @@ class MovieCarousel extends Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchMovies()
-    }
-
     render() {
         return (
             <>
                 <Row>
-
                     <h4 className="color-white pl-4 mt-3">{this.props.carouselName}</h4>
-
                 </Row>
 
                 {this.state.isLoading && (
@@ -51,7 +50,6 @@ class MovieCarousel extends Component {
                         <span className="visually-hidden"></span>
                     </Spinner>
                 )}
-
 
                 {this.state.error && (
                     <Alert variant="danger">
