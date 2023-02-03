@@ -54,6 +54,10 @@
   color: white;
 }
 
+.color-gray {
+  color: rgb(130 130 130)
+}
+
 .genres-btn {
   background-color: black;
 }
@@ -73,4 +77,35 @@ h2 {
 
 .carousel-items {
   gap: 4px;
+}
+
+.bottom-icon {
+  font-size: 30px;
+}
+
+.bottom-text {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.service-button {
+  padding-inline: 5px;
+  padding-block: 5px;
+  border: 1px solid rgb(130 130 130);
+}
+
+.carousel-items {
+  height: 320px;
+  width: 100%;
+}
+
+.carousel-img {
+  height: 320px;
+  width: 201px;
+  margin-left: 5.5px;
+  object-fit: cover;
+}
+
+.carousel-indicators li {
+  visibility: hidden;
 }

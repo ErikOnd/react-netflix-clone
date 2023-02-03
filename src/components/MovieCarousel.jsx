@@ -17,19 +17,17 @@ class MovieCarousel extends Component {
             let respons = await fetch(`http://www.omdbapi.com/?apikey=fb8521a1&s=${this.props.query}`)
             let data = await respons.json()
 
-            if (respons.ok) {
-                this.setState({
-                    movies: data.Search,
-                    isLoading: false,
-                })
 
-                console.log(this.state.movies[0])
-            }
+            this.setState({
+                movies: data.Search,
+                isLoading: false,
+            })
+
 
         } catch (error) {
             this.setState({
                 isLoading: false,
-                error: true
+                error: true,
             })
             console.log(error)
         }
@@ -61,13 +59,25 @@ class MovieCarousel extends Component {
                     </Alert>
                 )}
 
-                <Carousel className="px-2 pb-4">
-                    <Carousel.Item className="d-flex carousel-items">
-                        {this.state.movies.map((movie) => {
+                <Carousel className="px-2 pb-4 d-flex justify-content-between" interval={null}>
+                    <Carousel.Item className="carousel-items">
+                        {this.state.error === false && this.state.movies.map((movie) => {
                             return (
 
-                                <img
-                                    className="d-block w-100"
+                                <img key={movie.imdbID}
+                                    className="carousel-img"
+                                    src={movie.Poster}
+                                    alt="First slide"
+                                />
+                            )
+                        })}
+                    </Carousel.Item>
+                    <Carousel.Item className="carousel-items">
+                        {this.state.error === false && this.state.movies.map((movie) => {
+                            return (
+
+                                <img key={movie.imdbID}
+                                    className="carousel-img"
                                     src={movie.Poster}
                                     alt="First slide"
                                 />
