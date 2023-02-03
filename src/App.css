@@ -32,7 +32,45 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.logo {
+  height: 30px;
+}
+
+.avatar {
+  height: 25px;
+}
+
+.main-container {
+  background-color: rgb(52 58 64);
+}
+
+.color-white {
+  color: white;
+}
+
+.genres-btn {
+  background-color: black;
+}
+
+.bi.bi-caret-down-fill {
+  font-size: 10px;
+}
+
+.icon-holder {
+  border: 1px solid white;
+  padding-inline: 10px;
+}
+
+h2 {
+  white-space: nowrap;
+}
+
+.carousel-items {
+  gap: 4px;
 }
