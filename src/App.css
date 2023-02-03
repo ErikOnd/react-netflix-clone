@@ -47,7 +47,7 @@
 }
 
 .main-container {
-  background-color: rgb(52 58 64);
+  background-color: rgb(20 20 20)
 }
 
 .color-white {
@@ -58,9 +58,32 @@
   color: rgb(130 130 130)
 }
 
-.genres-btn {
+.ml-5.genres-btn {
   background-color: black;
+  border: 1px solid white;
 }
+
+.ml-5.genres-btn:focus {
+  background-color: black;
+  border: 1px solid white;
+}
+
+/* 
+.ml-5.genres-btn:visited {
+  background-color: black;
+  border: 1px solid white;
+}
+
+.ml-5.genres-btn:active {
+  background-color: black;
+  border: 1px solid white;
+} */
+
+.ml-5.genres-btn:hover {
+  background-color: black;
+  border: 1px solid white;
+}
+
 
 .bi.bi-caret-down-fill {
   font-size: 10px;
@@ -108,4 +131,9 @@ h2 {
 
 .carousel-indicators li {
   visibility: hidden;
+}
+
+.color-nav {
+  background-color: rgb(20 20 20);
+
 }

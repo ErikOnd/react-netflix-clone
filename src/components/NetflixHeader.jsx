@@ -10,7 +10,7 @@ const NetflixHeader = () => {
                 <Col className="pl-2 d-flex justify-content-start align-items-center"><h2>TV Shows</h2>
 
                     <Dropdown>
-                        <Dropdown.Toggle id="dropdown-basic" className='ml-5 genres-btn'>
+                        <Dropdown.Toggle className='ml-5 genres-btn'>
                             Genres
                         </Dropdown.Toggle>
 
