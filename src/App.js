@@ -17,7 +17,7 @@ function App() {
           <NetflixHeader></NetflixHeader>
           <Routes>
             <Route path='/tv-shows' element={<TVShows />} />
-            <Route path='/movie-details/:elementId' element={<MovieDetails />} />
+            <Route path='/movie-details/:movieId' element={<MovieDetails />} />
           </Routes>
           <NetflixFooter></NetflixFooter>
         </Container>

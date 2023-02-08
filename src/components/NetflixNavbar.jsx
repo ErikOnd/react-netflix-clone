@@ -3,11 +3,20 @@ import { Nav } from "react-bootstrap"
 import NavLogo from '../assets/netflix_logo.png'
 import ProfilePicture from '../assets/avatar.png'
 import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from "react"
 
 
 const NetflixNavbar = () => {
 
   const location = useLocation()
+
+  const [tvShowsName, setTvShowsName] = useState('TV Shows')
+
+  useEffect(() => {
+    console.log('test')
+    location.pathname === '/tv-shows' && setTvShowsName('Search in TV Shows…')
+  }, [])
+
 
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" className="color-nav">
@@ -17,13 +26,10 @@ const NetflixNavbar = () => {
         <Nav className="mr-auto">
           <Nav.Link href="#home">Home</Nav.Link>
 
+          <Link to="/tv-shows" className="nav-link">
+            {tvShowsName}
 
-          <Link to="/tv-shows">
-            <div className={location.pathname === '/tv-shows'
-              ? 'nav-link active'
-              : 'navlink'}>TV Shows
 
-            </div>
           </Link>
 
           <Nav.Link href="#pricing">Movies</Nav.Link>

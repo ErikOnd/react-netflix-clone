@@ -7,24 +7,34 @@ import { Row } from "react-bootstrap";
 import Table from 'react-bootstrap/Table';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 
 const MovieDetails = () => {
 
     const [movie, setMovie] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(false)
+
+
+
     const params = useParams()
 
 
     const getMovie = async () => {
-        console.log(params.elementId)
+
         try {
-            const res = await fetch('http://www.omdbapi.com/?apikey=fb8521a1&i=' + params.elementId)
+            const res = await fetch('http://www.omdbapi.com/?apikey=fb8521a1&i=' + params.movieId)
             const data = await res.json()
             if (res.ok) {
                 console.log(data)
                 setMovie(data)
+                setIsLoading(false)
+                setError(false)
             }
 
         } catch (error) {
+            setIsLoading(false)
+            setError(true)
             console.log(error)
 
         }
@@ -37,7 +47,7 @@ const MovieDetails = () => {
 
     return (
         <Container>
-            {movie !== null &&
+            {movie !== null && movie.Response !== 'False' ?
                 <Row className="justify-content-center">
                     <Card style={{ width: '18rem' }}>
                         <Card.Img variant="top" src={movie.Poster} />
@@ -53,6 +63,7 @@ const MovieDetails = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {console.log(movie)}
                                     {movie.Ratings.map((rating) => {
                                         return (
 
@@ -73,7 +84,9 @@ const MovieDetails = () => {
 
                         </Card.Body>
                     </Card>
-                </Row>}
+                </Row> : <Alert variant="danger">
+                    An Error Occurred
+                </Alert>}
         </Container>
     )
 }
