@@ -2,8 +2,12 @@ import { Navbar } from "react-bootstrap"
 import { Nav } from "react-bootstrap"
 import NavLogo from '../assets/netflix_logo.png'
 import ProfilePicture from '../assets/avatar.png'
+import { Link, useLocation } from 'react-router-dom'
+
 
 const NetflixNavbar = () => {
+
+  const location = useLocation()
 
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" className="color-nav">
@@ -12,7 +16,16 @@ const NetflixNavbar = () => {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">TV Shows</Nav.Link>
+
+
+          <Link to="/tv-shows">
+            <div className={location.pathname === '/tv-shows'
+              ? 'nav-link active'
+              : 'navlink'}>TV Shows
+
+            </div>
+          </Link>
+
           <Nav.Link href="#pricing">Movies</Nav.Link>
           <Nav.Link href="#pricing">Recently Added</Nav.Link>
           <Nav.Link href="#pricing">My List</Nav.Link>
