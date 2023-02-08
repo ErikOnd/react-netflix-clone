@@ -137,3 +137,16 @@ h2 {
   background-color: rgb(20 20 20);
 
 }
+
+.movie-card {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+}
+
+.details-btn {
+  position: absolute;
+  z-index: 2;
+  bottom: 0px;
+  left: 6px;
+}

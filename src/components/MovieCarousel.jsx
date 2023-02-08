@@ -3,17 +3,19 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Row } from "react-bootstrap";
 import { Alert } from "react-bootstrap";
 import Spinner from 'react-bootstrap/Spinner';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom'
 const MovieCarousel = (props) => {
 
 
     const [movies, setMovies] = useState([])
-    const [isLoading, setIsLoading] = useState('true')
-    const [error, setError] = useState('false')
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
         fetchMovies()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
 
     const fetchMovies = async () => {
         try {
@@ -21,13 +23,14 @@ const MovieCarousel = (props) => {
             let data = await respons.json()
 
             if (respons.ok) {
+                console.log(data.Search)
                 setMovies(data.Search)
-                setIsLoading('false')
-                setError('false')
+                setIsLoading(false)
+                setError(false)
             }
         } catch (error) {
-            setIsLoading('false')
-            setError('true')
+            setIsLoading(false)
+            setError(true)
             console.log(error)
         }
     }
@@ -54,13 +57,16 @@ const MovieCarousel = (props) => {
                 <Carousel.Item className="carousel-items">
                     {error === false && movies.map((movie) => {
                         return (
-
-                            <img key={movie.imdbID}
-                                className="carousel-img"
-                                src={movie.Poster}
-                                alt="First slide"
-                            />
-
+                            <div className="movie-card">
+                                <img key={movie.imdbID}
+                                    className="carousel-img"
+                                    src={movie.Poster}
+                                    alt="First slide"
+                                />
+                                <Link to={"/movie-details/" + movie.imdbID}>
+                                    <Button variant="primary" className="details-btn">Details</Button>
+                                </Link>
+                            </div>
                         )
                     })}
                 </Carousel.Item>
@@ -68,11 +74,16 @@ const MovieCarousel = (props) => {
                     {error === false && movies.map((movie) => {
                         return (
 
-                            <img key={movie.imdbID}
-                                className="carousel-img"
-                                src={movie.Poster}
-                                alt="First slide"
-                            />
+                            <div className="movie-card">
+                                <img key={movie.imdbID}
+                                    className="carousel-img"
+                                    src={movie.Poster}
+                                    alt="First slide"
+                                />
+                                <Link to="/movie-details">
+                                    <Button variant="primary" className="details-btn">Details</Button>
+                                </Link>
+                            </div>
                         )
                     })}
                 </Carousel.Item>
