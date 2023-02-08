@@ -3,19 +3,14 @@ import { Nav } from "react-bootstrap"
 import NavLogo from '../assets/netflix_logo.png'
 import ProfilePicture from '../assets/avatar.png'
 import { Link, useLocation } from 'react-router-dom'
-import { useEffect, useState } from "react"
+import Form from 'react-bootstrap/Form';
+
 
 
 const NetflixNavbar = () => {
 
   const location = useLocation()
 
-  const [tvShowsName, setTvShowsName] = useState('TV Shows')
-
-  useEffect(() => {
-    console.log('test')
-    location.pathname === '/tv-shows' && setTvShowsName('Search in TV Shows…')
-  }, [])
 
 
   return (
@@ -24,19 +19,28 @@ const NetflixNavbar = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-
-          <Link to="/tv-shows" className="nav-link">
-            {tvShowsName}
-
-
+          <Link to="/home" className="nav-link">
+            <div className={
+              location.pathname === '/home'
+                ? 'nav-link active'
+                : 'nav-link'
+            }
+            >Home</div>
           </Link>
 
-          <Nav.Link href="#pricing">Movies</Nav.Link>
-          <Nav.Link href="#pricing">Recently Added</Nav.Link>
-          <Nav.Link href="#pricing">My List</Nav.Link>
+          <Link to="/tv-shows" className="nav-link">
+            <div className={
+              location.pathname === '/tv-shows'
+                ? 'nav-link active'
+                : 'nav-link'
+            }
+            >TV Shows</div>
+          </Link>
         </Nav>
         <Nav className="ml-auto">
+          <Form.Control
+            placeholder={location.pathname === '/tv-shows' && 'Search in TV Shows…'}
+          />
           <Nav.Link><i className="bi bi-search"></i></Nav.Link>
           <Nav.Link>KIDS</Nav.Link>
           <Nav.Link><i className="bi bi-bell-fill"></i></Nav.Link>

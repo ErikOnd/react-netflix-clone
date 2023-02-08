@@ -27,12 +27,12 @@ const MovieDetails = () => {
             const res = await fetch('http://www.omdbapi.com/?apikey=fb8521a1&i=' + params.movieId)
             const data = await res.json()
             if (data.Response !== "False") {
-                console.log(data)
                 setMovie(data)
                 setIsLoading(false)
                 setError(false)
             }
             else {
+                console.log(data)
                 setIsLoading(false)
                 setError(true)
             }

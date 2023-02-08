@@ -80,7 +80,7 @@ const MovieCarousel = (props) => {
                                     src={movie.Poster}
                                     alt="First slide"
                                 />
-                                <Link to="/movie-details">
+                                <Link to={"/movie-details/" + movie.imdbID}>
                                     <Button variant="primary" className="details-btn">Details</Button>
                                 </Link>
                             </div>
