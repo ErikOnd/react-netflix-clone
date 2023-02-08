@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import Table from 'react-bootstrap/Table';
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MovieDetails = () => {
 
@@ -66,7 +67,10 @@ const MovieDetails = () => {
 
                         </ListGroup>
                         <Card.Body>
-                            <Card.Link href="#">Back to TV Shows</Card.Link>
+                            <Link to="/tv-shows">
+                                <Card.Link href="#">Back to TV Shows</Card.Link>
+                            </Link>
+
                         </Card.Body>
                     </Card>
                 </Row>}
