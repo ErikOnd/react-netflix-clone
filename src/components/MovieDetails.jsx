@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Alert } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 
 const MovieDetails = () => {
 
@@ -25,17 +26,22 @@ const MovieDetails = () => {
         try {
             const res = await fetch('http://www.omdbapi.com/?apikey=fb8521a1&i=' + params.movieId)
             const data = await res.json()
-            if (res.ok) {
+            if (data.Response !== "False") {
                 console.log(data)
                 setMovie(data)
                 setIsLoading(false)
                 setError(false)
             }
+            else {
+                setIsLoading(false)
+                setError(true)
+            }
 
         } catch (error) {
+
             setIsLoading(false)
             setError(true)
-            console.log(error)
+            console.log('Error:' + error)
 
         }
     }
@@ -47,7 +53,19 @@ const MovieDetails = () => {
 
     return (
         <Container>
-            {movie !== null && movie.Response !== 'False' ?
+
+            {isLoading && (
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden"></span>
+                </Spinner>
+            )}
+
+            {error && (
+                <Alert variant="danger">
+                    An Error Occurred
+                </Alert>
+            )}
+            {(movie !== null && movie.Response !== 'False') &&
                 <Row className="justify-content-center">
                     <Card style={{ width: '18rem' }}>
                         <Card.Img variant="top" src={movie.Poster} />
@@ -84,9 +102,7 @@ const MovieDetails = () => {
 
                         </Card.Body>
                     </Card>
-                </Row> : <Alert variant="danger">
-                    An Error Occurred
-                </Alert>}
+                </Row>}
         </Container>
     )
 }
