@@ -34,7 +34,6 @@ const MovieDetails = () => {
                 setError(false)
             }
             else {
-                console.log(data)
                 setIsLoading(false)
                 setError(true)
             }
@@ -57,7 +56,6 @@ const MovieDetails = () => {
             })
             const data = await res.json()
             if (res.ok) {
-                console.log(data)
                 setComments(data)
                 setIsLoading(false)
                 setError(false)
@@ -78,6 +76,15 @@ const MovieDetails = () => {
         getMovie()
         getComments()
     }, [])
+
+    const Smiley = (count) => {
+        let smileys = [];
+
+        for (let i = 0; i < count; i++) {
+            smileys.push(<span role="img" aria-label="smiley">⭐</span>);
+        }
+        return smileys
+    }
 
 
     return (
@@ -111,7 +118,6 @@ const MovieDetails = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {console.log(movie)}
                                         {movie.Ratings.map((rating) => {
                                             return (
 
@@ -133,12 +139,17 @@ const MovieDetails = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col>
+                    <Col className="text-left">
 
                         {(comments !== null && comments.Response !== 'False') && comments.map((comment) => {
                             return <div className=" mb-5 comment-box">
-                                <p>Comment: {comment.comment}</p>
-                                <p>Rating: {comment.rate}</p>
+                                <p className="ml-5 mt-2">Comment: {comment.comment}</p>
+                                <p className="ml-5">Rating: {Smiley(comment.rate).map((singel) => {
+                                    return (
+                                        <span>{singel}</span>
+
+                                    )
+                                })}</p>
                             </div>
                         })}
                     </Col>

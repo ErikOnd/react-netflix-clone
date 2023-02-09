@@ -93,3 +93,5 @@ const MovieCarousel = (props) => {
 }
 
 export default MovieCarousel
+
+
