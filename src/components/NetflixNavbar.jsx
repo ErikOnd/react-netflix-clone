@@ -37,14 +37,14 @@ const NetflixNavbar = () => {
             >TV Shows</div>
           </Link>
         </Nav>
-        <Nav className="ml-auto">
+        <Nav className="ml-auto d-flex align-items-center">
           <Form.Control
             placeholder={location.pathname === '/tv-shows' && 'Search in TV Shows…'}
           />
           <Nav.Link><i className="bi bi-search"></i></Nav.Link>
           <Nav.Link>KIDS</Nav.Link>
           <Nav.Link><i className="bi bi-bell-fill"></i></Nav.Link>
-          <Nav.Link className="pr-0 mr-4 d-none d-md-block"> <img src={ProfilePicture} alt="avatar" className="avatar"></img><i className="bi bi-caret-down-fill"></i></Nav.Link>
+          <Nav.Link className="pr-0 mr-4 d-none d-md-block"> <div className="d-flex"><img src={ProfilePicture} alt="avatar" className="avatar"></img><i className="bi bi-caret-down-fill mt-2 ml-1 mr-1"></i></div> </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
