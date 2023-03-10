@@ -12,29 +12,8 @@ const MovieCarousel = (props) => {
   const apiUrl = process.env.REACT_APP_BE_URL;
 
   useEffect(() => {
-    fetchMovies();
     getData();
   }, []);
-
-  const fetchMovies = async () => {
-    try {
-      let respons = await fetch(
-        `http://www.omdbapi.com/?apikey=fb8521a1&s=${props.query}`
-      );
-      let data = await respons.json();
-
-      if (respons.ok) {
-        console.log(data.Search);
-        setMovies(data.Search);
-        setIsLoading(false);
-        setError(false);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      setError(true);
-      console.log(error);
-    }
-  };
 
   const getData = async () => {
     try {
@@ -42,8 +21,13 @@ const MovieCarousel = (props) => {
       const data = await res.json();
       if (res.ok) {
         console.log(data);
+        setMovies(data);
+        setIsLoading(false);
+        setError(false);
       }
     } catch (error) {
+      setIsLoading(false);
+      setError(true);
       console.log(error);
     }
   };
@@ -74,7 +58,7 @@ const MovieCarousel = (props) => {
                   <img
                     key={movie.imdbID}
                     className="carousel-img"
-                    src={movie.Poster}
+                    src={movie.poster}
                     alt="First slide"
                   />
                   <Link to={"/movie-details/" + movie.imdbID}>
@@ -94,7 +78,7 @@ const MovieCarousel = (props) => {
                   <img
                     key={movie.imdbID}
                     className="carousel-img"
-                    src={movie.Poster}
+                    src={movie.poster}
                     alt="First slide"
                   />
                   <Link to={"/movie-details/" + movie.imdbID}>

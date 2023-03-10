@@ -47,7 +47,7 @@
 }
 
 .main-container {
-  background-color: rgb(20 20 20)
+  background-color: rgb(20 20 20);
 }
 
 .color-white {
@@ -55,7 +55,7 @@
 }
 
 .color-gray {
-  color: rgb(130 130 130)
+  color: rgb(130 130 130);
 }
 
 .ml-5.genres-btn {
@@ -83,7 +83,6 @@
   background-color: black;
   border: 1px solid white;
 }
-
 
 .bi.bi-caret-down-fill {
   font-size: 10px;
@@ -135,7 +134,6 @@ h2 {
 
 .color-nav {
   background-color: rgb(20 20 20);
-
 }
 
 .movie-card {
@@ -155,4 +153,16 @@ h2 {
   color: white;
   border: 1px solid white;
   border-radius: 10px;
+}
+
+.new-movie-container {
+  color: white;
+}
+
+.edit-movie-div {
+  color: white;
+}
+
+.edit-movie {
+  color: white;
 }

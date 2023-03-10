@@ -1,161 +1,132 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 import { useState } from "react";
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 import { Container } from "react-bootstrap";
 import { Row } from "react-bootstrap";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import { Col } from "react-bootstrap";
-
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
 const MovieDetails = () => {
+  const [movie, setMovie] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [comments, setComments] = useState(null);
+  const apiUrl = process.env.REACT_APP_BE_URL;
+  const navigate = useNavigate();
 
-    const [movie, setMovie] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState(false)
-    const [comments, setComments] = useState(null)
+  const [mediaInfo, setMediaInfo] = useState();
 
+  const params = useParams();
+  console.log(movie);
 
+  const deleteMovie = async () => {
+    const response = await fetch(`${apiUrl}/medias/${params.movieId}`, {
+      method: "DELETE",
+    });
 
-    const params = useParams()
-
-
-    const getMovie = async () => {
-
-        try {
-            const res = await fetch('http://www.omdbapi.com/?apikey=fb8521a1&i=' + params.movieId)
-            const data = await res.json()
-            if (data.Response !== "False") {
-                setMovie(data)
-                setIsLoading(false)
-                setError(false)
-            }
-            else {
-                setIsLoading(false)
-                setError(true)
-            }
-
-        } catch (error) {
-
-            setIsLoading(false)
-            setError(true)
-            console.log('Error:' + error)
-
-        }
+    if (!response.ok) {
+      throw new Error(`Failed to delete data: ${response.statusText}`);
+    } else {
+      navigate("/tv-shows");
     }
 
-    const getComments = async () => {
-        try {
-            const res = await fetch('https://striveschool-api.herokuapp.com/api/comments/' + params.movieId, {
-                headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M5NDNmM2U3MzczODAwMTUzNzQzYjkiLCJpYXQiOjE2NzUzNDMwOTcsImV4cCI6MTY3NjU1MjY5N30._c0I4sL8mFtF5NXSQHQAHBF60mAfVFc4FUVYr7nBI8g',
-                },
-            })
-            const data = await res.json()
-            if (res.ok) {
-                setComments(data)
-                setIsLoading(false)
-                setError(false)
-            }
+    const data = await response.json();
+    return data;
+  };
 
-        } catch (error) {
-            console.log(error)
-            setIsLoading(false)
-            setError(true)
-        }
+  const editMovie = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/medias/${params.movieId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(mediaInfo),
+      });
+    } catch (error) {
+      console.error("An error occurred:", error);
+      throw error;
     }
+  };
 
-
-
-
-
-    useEffect(() => {
-        getMovie()
-        getComments()
-    }, [])
-
-    const Smiley = (count) => {
-        let smileys = [];
-
-        for (let i = 0; i < count; i++) {
-            smileys.push(<span role="img" aria-label="smiley">⭐</span>);
-        }
-        return smileys
+  const getMovie = async () => {
+    try {
+      const res = await fetch(`${apiUrl}/medias/${params.movieId}`);
+      const data = await res.json();
+      if (data.Response !== "False") {
+        setMovie(data);
+        setIsLoading(false);
+        setError(false);
+        setMovieInfo();
+      } else {
+        setIsLoading(false);
+        setError(true);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setError(true);
+      console.log("Error:" + error);
     }
+  };
 
+  const setMovieInfo = () => {
+    setMediaInfo({
+      title: movie.title,
+      year: movie.year,
+      type: movie.type,
+      poster: movie.poster,
+    });
+  };
 
-    return (
-        <Container>
+  useEffect(() => {
+    getMovie();
+  }, []);
 
-            {isLoading && (
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden"></span>
-                </Spinner>
-            )}
+  return (
+    <Container>
+      {isLoading && (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden"></span>
+        </Spinner>
+      )}
 
-            {error && (
-                <Alert variant="danger">
-                    An Error Occurred
-                </Alert>
-            )}
-            {(movie !== null && movie.Response !== 'False') &&
-                <Row className="justify-content-center">
-                    <Col>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={movie.Poster} />
-                            <Card.Body>
-                                <Card.Title>{movie.Title}</Card.Title>
-                            </Card.Body>
-                            <ListGroup className="list-group-flush">
-                                <Table striped bordered hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Source</th>
-                                            <th>Rating</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {movie.Ratings.map((rating) => {
-                                            return (
+      {error && <Alert variant="danger">An Error Occurred</Alert>}
+      {movie !== null && movie.Response !== "False" && (
+        <Row className="justify-content-center">
+          <Col>
+            <Card style={{ width: "18rem" }}>
+              <Card.Img variant="top" src={movie.poster} />
+              <Card.Body>
+                <Card.Title>{movie.title}</Card.Title>
+              </Card.Body>
 
-                                                <tr>
-                                                    <td>{rating.Source}</td>
-                                                    <td>{rating.Value}</td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </Table>
+              <Card.Body>
+                <Link to="/tv-shows">
+                  <Card.Link href="#">Back to TV Shows</Card.Link>
+                </Link>
+              </Card.Body>
+              <a href={`${apiUrl}/medias/${params.movieId}/pdf`}>Print PDF</a>
+            </Card>
+          </Col>
+          <Col className="text-left">
+            <Button variant="danger" onClick={deleteMovie}>
+              Delete
+            </Button>
+            <Button variant="info" onClick={editMovie}>
+              Edit
+            </Button>
+          </Col>
+        </Row>
+      )}
+    </Container>
+  );
+};
 
-                            </ListGroup>
-                            <Card.Body>
-                                <Link to="/tv-shows">
-                                    <Card.Link href="#">Back to TV Shows</Card.Link>
-                                </Link>
-
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col className="text-left">
-
-                        {(comments !== null && comments.Response !== 'False') && comments.map((comment) => {
-                            return <div className=" mb-5 comment-box">
-                                <p className="ml-5 mt-2">Comment: {comment.comment}</p>
-                                <p className="ml-5">Rating: {Smiley(comment.rate).map((singel) => {
-                                    return (
-                                        <span>{singel}</span>
-
-                                    )
-                                })}</p>
-                            </div>
-                        })}
-                    </Col>
-                </Row>}
-        </Container>
-    )
-}
-
-export default MovieDetails
+export default MovieDetails;
