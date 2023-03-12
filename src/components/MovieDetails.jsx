@@ -31,9 +31,7 @@ const MovieDetails = () => {
       method: "DELETE",
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to delete data: ${response.statusText}`);
-    } else {
+    if (response.ok) {
       navigate("/tv-shows");
     }
 
@@ -67,11 +65,11 @@ const MovieDetails = () => {
         setMovieInfo();
       } else {
         setIsLoading(false);
-        setError(true);
+        //  setError(true);
       }
     } catch (error) {
       setIsLoading(false);
-      setError(true);
+      //setError(true);
       console.log("Error:" + error);
     }
   };
